@@ -1,6 +1,64 @@
 # Unscented Kalman Filter Project Starter Code
 Self-Driving Car Engineer Nanodegree Program
 
+## Topics in rubric
+
+### 1. Your code should compile.
+
+My result code compiles as instructed.
+
+### 2. px, py, vx, vy output coordinates must have an RMSE <= [.09, .10, .40, .30] when using the file: "obj_pose-laser-radar-synthetic-input.txt which is the same data file the simulator uses for Dataset 1"
+
+My result has the RMSE within the criteria.
+![alt text](./img/dataset_1.png "dataset 1")
+![alt text](./img/dataset_2.png "dataset 1")
+
+### 3. Your Sensor Fusion algorithm follows the general processing flow as taught in the preceding lessons.
+
+My result works in accordance with the instruction. Below is the instruction from the course.
+
+1) main.cpp - reads in data, calls a function to run the Unscented Kalman filter, calls a function to calculate RMSE
+2) ukf.cpp - initializes the Unscented Kalman filter, calls the predict and update function, defines the predict and update functions
+3) tools.cpp- function to calculate RMSE
+
+### 3. Your Kalman Filter algorithm handles the first measurements appropriately.
+
+My result code receives the first measurements from main.cpp and initialize variables. The code is in ukf.cpp line 85 ~ 125.
+
+### 4. Your Kalman Filter algorithm first predicts then updates.
+
+My code does prediction first by calling Prediction(dt) (in 141, ukf.cpp) and then does update by calling UpdateLider or UpdateRadar (in 144 ~ 148, ukf.cpp)
+
+### 5. Your Kalman Filter can handle radar and lidar measurements.
+
+When initialization, it takes laser and radar data separately by checking meas_package.sensor_type_ and use_laser or use_radar.
+Also when update, it has two individual functions for each sensor measurement, which are UpdateLidar and UpdateRadar.
+
+### 6. Your algorithm should avoid unnecessary calculations.
+
+I reviewed my code and checked if any part in my code does repeated or unnecessary calculations.
+
+### 7. Side notes
+
+ExtendedKF vs. UnscentedKF: From my results, unscented kalman filter performs better than extended kalman filter.
+However, it took much more time to tweak some variables like std_a, std_yawdd_, x_ and P_ for initialization.
+
+| dataset1  | ExtendedKF | UnscentedKF |
+|---|---|---|
+| x  | 0.0954 | 0.0854 |
+| y  | 0.0837 | 0.0831 |
+| vx | 0.4499 | 0.3079 |
+| vy | 0.4357 | 0.1939 |
+
+| dataset2 | ExtendedKF | UnscentedKF |
+|---|---|---|
+| x  | 0.0744 | 0.0899 |
+| y  | 0.0958 | 0.0822 |
+| vx | 0.4583 | 0.3858 |
+| vy | 0.4943 | 0.2156 |
+
+---
+
 In this project utilize an Unscented Kalman Filter to estimate the state of a moving object of interest with noisy lidar and radar measurements. Passing the project requires obtaining RMSE values that are lower that the tolerance outlined in the project reburic. 
 
 This project involves the Term 2 Simulator which can be downloaded [here](https://github.com/udacity/self-driving-car-sim/releases)
